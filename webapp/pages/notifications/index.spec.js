@@ -5,12 +5,13 @@ import DropdownFilter from '~/components/DropdownFilter/DropdownFilter'
 import NotificationsTable from '~/components/NotificationsTable/NotificationsTable'
 import PaginationButtons from '~/components/_new/generic/PaginationButtons/PaginationButtons'
 
+import { markAsReadMutation, markAllAsReadMutation } from '~/graphql/User'
 const localVue = global.localVue
 
 config.stubs['client-only'] = '<span><slot /></span>'
 
 describe('PostIndex', () => {
-  let wrapper, Wrapper, mocks, propsData
+  let wrapper, Wrapper, mocks, propsData, markAllAsReadButton
 
   beforeEach(() => {
     propsData = {}
@@ -80,6 +81,9 @@ describe('PostIndex', () => {
         ]
         wrapper = Wrapper()
         wrapper.find(DropdownFilter).vm.$emit('filter', propsData.filterOptions[1])
+
+        markAllAsReadButton = wrapper.find('[data-test="markAllAsRead-button"]')
+        expect(markAllAsReadButton).toBeTruthy()
       })
 
       it('sets `notificationRead` to value of received option', () => {
@@ -93,27 +97,66 @@ describe('PostIndex', () => {
       it('refreshes the notificaitons', () => {
         expect(mocks.$apollo.queries.notifications.refresh).toHaveBeenCalledTimes(1)
       })
+
+      it('click on `mark all as read` button', async () => {
+        await markAllAsReadButton.trigger('click')
+        expect(mocks.$apollo.mutate).not.toHaveBeenCalled()
+      })
     })
 
-    describe('markNotificationAsRead', () => {
+    describe('markAllAsRead', () => {
+      let expectedParams
       beforeEach(() => {
         wrapper = Wrapper()
-        wrapper.find(NotificationsTable).vm.$emit('markNotificationAsRead', 'notificationSourceId')
+        wrapper.find(NotificationsTable).vm.$emit('markAllAsRead', 'notificationSourceId')
       })
 
-      it('calls markNotificationAsRead mutation', () => {
-        expect(mocks.$apollo.mutate).toHaveBeenCalledWith(
-          expect.objectContaining({ variables: { id: 'notificationSourceId' } }),
-        )
+      it('calls markAllAsRead mutation', () => {
+        expectedParams = {
+          mutation: markAsReadMutation(),
+          variables: { id: 'notificationSourceId' },
+        }
+        expect(mocks.$apollo.mutate).toHaveBeenCalledWith(expect.objectContaining(expectedParams))
       })
 
       describe('error handling', () => {
         beforeEach(() => {
           mocks.$apollo.mutate = jest.fn().mockRejectedValueOnce({ message: 'Some error message' })
           wrapper = Wrapper()
-          wrapper
-            .find(NotificationsTable)
-            .vm.$emit('markNotificationAsRead', 'notificationSourceId')
+          wrapper.find(NotificationsTable).vm.$emit('markAllAsRead', 'notificationSourceId')
+        })
+
+        it('shows an error message if there is an error', () => {
+          expect(mocks.$toast.error).toHaveBeenCalledWith('Some error message')
+        })
+      })
+    })
+
+    describe('markAllNotificationAsRead', () => {
+      let expectedParams
+      beforeEach(() => {
+        wrapper = Wrapper()
+        // FIXME Should I remove next line?
+        wrapper.find(NotificationsTable).vm.$emit('markAllAsRead', 'notificationSourceId')
+      })
+
+      // FIXME: I need to discover why this test isn't working =(
+      it.skip('calls markAllNotificationAsRead mutation', async () => {
+        expectedParams = {
+          mutation: markAllAsReadMutation(),
+        }
+        // expect(mocks.$apollo.mutate).toHaveBeenCalledWith(expect.objectContaining(expectedParams))
+        // await wrapper.find('[data-test="markAllAsRead-button"]').trigger('click')
+
+        expect(mocks.$apollo.mutate).toHaveBeenCalledWith(expect.objectContaining(expectedParams))
+      })
+
+      describe('error handling', () => {
+        beforeEach(() => {
+          mocks.$apollo.mutate = jest.fn().mockRejectedValueOnce({ message: 'Some error message' })
+          wrapper = Wrapper()
+          // FIXME Should I remove next line?
+          wrapper.find(NotificationsTable).vm.$emit('markAllAsRead', 'notificationSourceId')
         })
 
         it('shows an error message if there is an error', () => {

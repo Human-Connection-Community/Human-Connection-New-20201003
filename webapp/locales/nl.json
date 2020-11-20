@@ -92,6 +92,26 @@
     "moreInfo": "Wat is Human Connection?",
     "password": "Uw Wachtwoord"
   },
+  "notifications": {
+    "comment": "",
+    "content": "",
+    "empty": "",
+    "filterLabel": {
+      "all": "",
+      "read": "",
+      "unread": ""
+    },
+    "markAllAsRead": "Markeer alles als gelezen",
+    "pageLink": "",
+    "post": "",
+    "reason": {
+      "commented_on_post": "",
+      "mentioned_in_comment": "",
+      "mentioned_in_post": ""
+    },
+    "title": "",
+    "user": ""
+  },
   "post": {
     "moreInfo": {
       "name": "Meer info"

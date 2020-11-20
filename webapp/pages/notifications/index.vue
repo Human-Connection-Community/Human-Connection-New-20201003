@@ -15,7 +15,22 @@
       @markNotificationAsRead="markNotificationAsRead"
       :notifications="notifications"
     />
-    <pagination-buttons :hasNext="hasNext" :hasPrevious="hasPrevious" @back="back" @next="next" />
+
+    <ds-flex>
+      <ds-flex-item class="notifications-footer" :width="{ base: '90%' }" centered>
+        <ds-button ghost primary @click="markAllAsRead" data-test="markAllAsRead-button">
+          {{ $t('notifications.markAllAsRead') }}
+        </ds-button>
+      </ds-flex-item>
+      <ds-flex-item :width="{ base: '10%' }">
+        <pagination-buttons
+          :hasNext="hasNext"
+          :hasPrevious="hasPrevious"
+          @back="back"
+          @next="next"
+        />
+      </ds-flex-item>
+    </ds-flex>
   </base-card>
 </template>
 
@@ -23,7 +38,7 @@
 import NotificationsTable from '~/components/NotificationsTable/NotificationsTable'
 import DropdownFilter from '~/components/DropdownFilter/DropdownFilter'
 import PaginationButtons from '~/components/_new/generic/PaginationButtons/PaginationButtons'
-import { notificationQuery, markAsReadMutation } from '~/graphql/User'
+import { notificationQuery, markAsReadMutation, markAllAsReadMutation } from '~/graphql/User'
 
 export default {
   components: {
@@ -54,6 +69,15 @@ export default {
         { label: this.$t('notifications.filterLabel.unread'), value: false },
       ]
     },
+    hasNotifications() {
+      return this.notifications.length
+    },
+    unreadNotificationsCount() {
+      const result = this.notifications.reduce((count, notification) => {
+        return notification.read ? count : count + 1
+      }, 0)
+      return result
+    },
   },
   methods: {
     filter(option) {
@@ -76,6 +100,19 @@ export default {
     },
     next() {
       this.offset += this.pageSize
+    },
+    async markAllAsRead() {
+      if (!this.hasNotifications) {
+        return
+      }
+
+      try {
+        await this.$apollo.mutate({
+          mutation: markAllAsReadMutation(this.$i18n),
+        })
+      } catch (error) {
+        this.$toast.error(error.message)
+      }
     },
   },
   apollo: {
@@ -111,5 +148,9 @@ export default {
 <style lang="scss">
 .notifications-page-flex {
   justify-content: space-between;
+}
+
+.notifications-footer {
+  text-align: center;
 }
 </style>

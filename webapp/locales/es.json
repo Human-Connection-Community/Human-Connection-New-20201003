@@ -449,6 +449,7 @@
       "read": "Leído",
       "unread": "No leído"
     },
+    "markAllAsRead": "Marcar todas como leido",
     "pageLink": "Todas las notificaciones",
     "post": "Contribución",
     "reason": {
