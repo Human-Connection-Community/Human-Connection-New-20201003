@@ -1,0 +1,22 @@
+---
+- hosts: webservers
+  become: yes
+  vars:
+    create_password: "{{ netcup.sudo_password }}"
+    copy_additional_keys: "{{ webservers.authorized_keys }}"
+  roles:
+    - role: initial_setup
+    - role: geerlingguy.pip
+      vars:
+        pip_install_packages:
+          - name: docker
+          - name: docker-compose
+          - name: passlib
+    - role: geerlingguy.docker
+      vars:
+        docker_compose_version: "1.27.4"
+        docker_users:
+          - ansible
+    - role: installation
+      tags:
+        - hundred-eyes

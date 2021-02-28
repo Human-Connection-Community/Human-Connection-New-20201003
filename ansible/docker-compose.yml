@@ -1,0 +1,87 @@
+version: "3.4"
+
+services:
+  webapp:
+    image: ocelotsocialnetwork/develop-webapp:latest
+    # build:
+    #   context: webapp
+    #   target: production
+    #   args:
+    #     - "BUILD_COMMIT=${TRAVIS_COMMIT}"
+    ports:
+      - 3000:80
+      - 3002:3002
+    networks:
+      - hc-network
+    depends_on:
+      - backend
+    volumes:
+      - webapp_node_modules:/develop-webapp/node_modules
+    environment:
+    #   - HOST=0.0.0.0
+      - HOST=127.0.0.1
+      - GRAPHQL_URI=http://backend:4000
+      - MAPBOX_TOKEN="pk.eyJ1IjoiYnVzZmFrdG9yIiwiYSI6ImNraDNiM3JxcDBhaWQydG1uczhpZWtpOW4ifQ.7TNRTO-o9aK1Y6MyW_Nd4g"
+    labels:
+      - "traefik.http.routers.webapp.rule=Host(`webapp.docker.localhost`)"
+  maintenance:
+    image: ocelotsocialnetwork/develop-maintenance:latest
+    # build:
+    #   context: webapp
+    #   dockerfile: Dockerfile.maintenance
+    networks:
+      - hc-network
+    ports:
+      - 3503:80
+    labels:
+      - "traefik.http.routers.maintenance.rule=Host(`maintenance.docker.localhost`)"
+  backend:
+    image: ocelotsocialnetwork/develop-backend:latest
+    # build:
+    #   context: backend
+    #   target: production
+    #   args:
+    #     - "BUILD_COMMIT=${TRAVIS_COMMIT}"
+    networks:
+      - hc-network
+    depends_on:
+      - neo4j
+    ports:
+      - 4000:4000
+    volumes:
+      - backend_node_modules:/develop-backend/node_modules
+      - uploads:/develop-backend/public/uploads
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - GRAPHQL_URI=http://backend:4000
+      - CLIENT_URI=http://localhost:3000
+      - JWT_SECRET=b/&&7b78BF&fv/Vd
+      - MAPBOX_TOKEN=pk.eyJ1IjoiYnVzZmFrdG9yIiwiYSI6ImNraDNiM3JxcDBhaWQydG1uczhpZWtpOW4ifQ.7TNRTO-o9aK1Y6MyW_Nd4g
+      - PRIVATE_KEY_PASSPHRASE=a7dsf78sadg87ad87sfagsadg78
+      - "DEBUG=${DEBUG}"
+  neo4j:
+    image: ocelotsocialnetwork/develop-neo4j:latest
+    # build:
+    #   context: neo4j
+    #   args:
+    #     - "BUILD_COMMIT=${TRAVIS_COMMIT}"
+    networks:
+      - hc-network
+    environment:
+      - NEO4J_AUTH=none
+      - NEO4J_dbms_security_procedures_unrestricted=algo.*,apoc.*
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+    ports:
+      - 7687:7687
+      - 7474:7474
+    volumes:
+      - neo4j_data:/data
+
+networks:
+  hc-network:
+
+volumes:
+  webapp_node_modules:
+  backend_node_modules:
+  neo4j_data:
+  uploads:

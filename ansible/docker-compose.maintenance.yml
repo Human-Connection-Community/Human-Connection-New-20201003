@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+  maintenance:
+    image: ocelotsocialnetwork/develop-maintenance:latest
+    # build:
+    #   context: webapp
+    #   dockerfile: Dockerfile.maintenance
+    networks:
+      - hc-network
+    ports:
+      - 3503:80
+    labels:
+      - "traefik.http.routers.maintenance.rule=Host(`maintenance.docker.localhost`)"
+
+networks:
+  hc-network:
+
+# volumes:
+#   webapp_node_modules:
+#   backend_node_modules:
+#   neo4j-data:
+#   uploads:
