@@ -87,7 +87,7 @@ export default {
   },
   mixins: [postListActions],
   data() {
-    const { hashtag = null } = this.$route.query
+    const { hashtag = null } = this.$route.query // Wolle remove with the rest?
     return {
       links,
       posts: [],

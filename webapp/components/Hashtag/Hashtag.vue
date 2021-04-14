@@ -12,7 +12,8 @@ export default {
   },
   computed: {
     hashtagUrl() {
-      return `/?hashtag=${this.id}`
+      // Wolle return `/?hashtag=${this.id}`
+      return `/search/search-results?search=%23${this.id}` // hashtag as '%23' has to be used for '#' explicitly! otherwise it is interpreted as the site path hashtag
     },
   },
 }

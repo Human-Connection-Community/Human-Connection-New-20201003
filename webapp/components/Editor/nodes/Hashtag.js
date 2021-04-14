@@ -22,21 +22,24 @@ export default class Hashtag extends TipTapMention {
       ...super.schema,
       toDOM: (node) => {
         // use a dummy domain because URL cannot handle relative urls
+        // Wolle const url = new URL('/', 'https://example.org')
+        // Wolle url.searchParams.append('hashtag', node.attrs.id)
         const url = new URL('/', 'https://example.org')
-        url.searchParams.append('hashtag', node.attrs.id)
+        url.searchParams.append('search', '%23' + node.attrs.id)
 
         return [
           'a',
           {
             class: this.options.mentionClass,
-            href: `/${url.search}`,
+            href: `/search/search-results${url.search}`,
             'data-hashtag-id': node.attrs.id,
-            target: '_blank',
+            // Wolle target: '_blank',
           },
           `${this.options.matcher.char}${node.attrs.label}`,
         ]
       },
       parseDOM: [
+        // Wolle make sure that correct html goe to the database! after editing a post now the new 'href' goes to the database and it gets inconsistant
         {
           tag: 'a[data-hashtag-id]',
           getAttrs: (dom) => {
