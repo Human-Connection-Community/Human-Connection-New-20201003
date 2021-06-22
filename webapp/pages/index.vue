@@ -21,8 +21,10 @@
         </div>
       </ds-grid-item>
       <template v-if="hasResults">
-        <masonry-grid-item
+        <ds-grid-item
           v-for="post in posts"
+          column-span="fullWidth"
+          :row-span="21"
           :key="post.id"
           :imageAspectRatio="post.image && post.image.aspectRatio"
         >
@@ -32,7 +34,7 @@
             @pinPost="pinPost(post, refetchPostList)"
             @unpinPost="unpinPost(post, refetchPostList)"
           />
-        </masonry-grid-item>
+        </ds-grid-item>
       </template>
       <template v-else>
         <ds-grid-item :row-span="2" column-span="fullWidth">
@@ -70,7 +72,6 @@ import HashtagsFilter from '~/components/HashtagsFilter/HashtagsFilter.vue'
 import HcEmpty from '~/components/Empty/Empty'
 import PostTeaser from '~/components/PostTeaser/PostTeaser.vue'
 import MasonryGrid from '~/components/MasonryGrid/MasonryGrid.vue'
-import MasonryGridItem from '~/components/MasonryGrid/MasonryGridItem.vue'
 import { mapGetters, mapMutations } from 'vuex'
 import { filterPosts } from '~/graphql/PostQuery.js'
 import UpdateQuery from '~/components/utils/UpdateQuery'
@@ -83,7 +84,6 @@ export default {
     PostTeaser,
     HcEmpty,
     MasonryGrid,
-    MasonryGridItem,
   },
   mixins: [postListActions],
   data() {
