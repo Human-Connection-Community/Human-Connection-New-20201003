@@ -1,39 +1,30 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ProgressBar from './ProgressBar'
 
+const localVue = global.localVue
+
 describe('ProgessBar.vue', () => {
-  let propsData
+  let propsData, slots, wrapper
 
   beforeEach(() => {
     propsData = {
       goal: 50000,
       progress: 10000,
     }
+    slots = {}
   })
 
-  const Wrapper = () => mount(ProgressBar, { propsData })
+  const Wrapper = () => shallowMount(ProgressBar, { localVue, propsData, slots })
 
   describe('given only goal and progress', () => {
-    it('renders no title', () => {
-      expect(Wrapper().find('.progress-bar__title').exists()).toBe(false)
+    it('calculates the progress bar width as a percentage of the goal', () => {
+      wrapper = Wrapper()
+      expect(wrapper.vm.progressBarWidth).toBe('width: 20%;')
     })
 
     it('renders no label', () => {
-      expect(Wrapper().find('.progress-bar__label').exists()).toBe(false)
-    })
-
-    it('calculates the progress bar width as a percentage of the goal', () => {
-      expect(Wrapper().vm.progressBarWidth).toBe('width: 20%;')
-    })
-  })
-
-  describe('given a title', () => {
-    beforeEach(() => {
-      propsData.title = 'This is progress'
-    })
-
-    it('renders the title', () => {
-      expect(Wrapper().find('.progress-bar__title').text()).toBe('This is progress')
+      wrapper = Wrapper()
+      expect(wrapper.find('.progress-bar__label').exists()).toBe(false)
     })
   })
 
@@ -43,7 +34,21 @@ describe('ProgessBar.vue', () => {
     })
 
     it('renders the label', () => {
-      expect(Wrapper().find('.progress-bar__label').text()).toBe('Going well')
+      wrapper = Wrapper()
+      expect(wrapper.find('.progress-bar__label').text()).toBe('Going well')
+    })
+  })
+
+  describe('given a fake-button as slot', () => {
+    beforeEach(() => {
+      slots = {
+        default: '<div class="fake-button"></div>',
+      }
+    })
+
+    it('renders the fake-button', () => {
+      wrapper = Wrapper()
+      expect(wrapper.find('.fake-button').exists()).toBe(true)
     })
   })
 })

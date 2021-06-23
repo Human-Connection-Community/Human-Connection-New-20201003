@@ -245,8 +245,7 @@
   },
   "donations": {
     "amount-of-total": "{amount} de {total} € collectés",
-    "donate-now": "Faites un don",
-    "donations-for": "Dons pour"
+    "donate-now": "Faites un don"
   },
   "editor": {
     "embed": {
@@ -269,9 +268,19 @@
     "all": "Toutes",
     "categories": "Catégories de contenu",
     "emotions": "Émotions",
-    "filter-by": "Filtrer par...",
+    "filter-by": "Filtrer par ...",
     "following": "Utilisateurs que je suis",
-    "languages": "Langues"
+    "languages": "Langues",
+    "order": {
+      "newest": {
+        "hint": null,
+        "label": "Plus récent"
+      },
+      "oldest": {
+        "hint": null,
+        "label": "Le plus ancien"
+      }
+    }
   },
   "followButton": {
     "follow": "Suivre",
@@ -669,18 +678,6 @@
     "termsAndConditions": "Conditions générales",
     "thanks": "Merci!",
     "tribunal": "Tribunal de registre"
-  },
-  "store": {
-    "posts": {
-      "orderBy": {
-        "newest": {
-          "label": "Plus récent"
-        },
-        "oldest": {
-          "label": "Le plus ancien"
-        }
-      }
-    }
   },
   "termsAndConditions": {
     "newTermsAndConditions": "Nouvelles conditions générales",

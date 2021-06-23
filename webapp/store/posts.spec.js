@@ -80,35 +80,10 @@ describe('getters', () => {
     })
   })
 
-  describe('orderByOptions', () => {
-    it('returns all options regardless of current state', () => {
-      const $t = jest.fn((t) => t)
-      expect(getters.orderOptions()({ $t })).toEqual([
-        {
-          key: 'store.posts.orderBy.oldest.label',
-          label: 'store.posts.orderBy.oldest.label',
-          icon: 'sort-amount-asc',
-          value: 'createdAt_asc',
-        },
-        {
-          key: 'store.posts.orderBy.newest.label',
-          label: 'store.posts.orderBy.newest.label',
-          icon: 'sort-amount-desc',
-          value: 'createdAt_desc',
-        },
-      ])
-    })
-  })
-
   describe('orderBy', () => {
     it('returns value for graphql query', () => {
       state = {
-        order: {
-          key: 'store.posts.orderBy.newest.label',
-          label: 'store.posts.orderBy.newest.label',
-          icon: 'sort-amount-desc',
-          value: 'createdAt_desc',
-        },
+        order: 'createdAt_desc',
       }
       expect(getters.orderBy(state)).toEqual('createdAt_desc')
     })
@@ -255,13 +230,14 @@ describe('mutations', () => {
     })
   })
 
-  describe('SELECT_ORDER', () => {
+  describe('TOGGLE_ORDER', () => {
     beforeEach(() => {
       testMutation = (key) => {
-        mutations.SELECT_ORDER(state, key)
+        mutations.TOGGLE_ORDER(state, key)
         return getters.orderBy(state)
       }
     })
+
     it('switches the currently selected order', () => {
       state = {
         // does not matter

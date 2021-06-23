@@ -38,7 +38,10 @@ export default {
   }
 
   > .sidebar {
-    flex-basis: 12%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 80%;
+    flex-grow: 1;
     max-width: $size-width-filter-sidebar;
   }
 
@@ -55,21 +58,21 @@ export default {
     flex-grow: 1;
 
     > .item {
-      width: 12.5%;
+      width: 50%;
       padding: 0 $space-x-small;
       margin-bottom: $space-small;
       text-align: center;
 
       @media only screen and (max-width: 800px) {
-        width: 16%;
+        width: 50%;
       }
 
       @media only screen and (max-width: 630px) {
-        width: 25%;
+        width: 40%;
       }
 
       @media only screen and (max-width: 440px) {
-        width: 50%;
+        width: 30%;
       }
     }
   }

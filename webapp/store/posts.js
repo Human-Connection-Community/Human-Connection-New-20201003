@@ -7,25 +7,12 @@ import clone from 'lodash/clone'
 
 const defaultFilter = {}
 
-const orderOptions = {
-  createdAt_asc: {
-    value: 'createdAt_asc',
-    key: 'store.posts.orderBy.oldest.label',
-    icon: 'sort-amount-asc',
-  },
-  createdAt_desc: {
-    value: 'createdAt_desc',
-    key: 'store.posts.orderBy.newest.label',
-    icon: 'sort-amount-desc',
-  },
-}
-
 export const state = () => {
   return {
     filter: {
       ...defaultFilter,
     },
-    order: orderOptions.createdAt_desc,
+    order: 'createdAt_desc',
   }
 }
 
@@ -76,8 +63,8 @@ export const mutations = {
     if (isEmpty(get(filter, 'emotions_some.emotion_in'))) delete filter.emotions_some
     state.filter = filter
   },
-  SELECT_ORDER(state, value) {
-    state.order = orderOptions[value]
+  TOGGLE_ORDER(state, value) {
+    state.order = value
   },
 }
 
@@ -100,23 +87,7 @@ export const getters = {
   filteredByEmotions(state) {
     return get(state.filter, 'emotions_some.emotion_in') || []
   },
-  orderOptions: (state) => ({ $t }) =>
-    Object.values(orderOptions).map((option) => {
-      return {
-        ...option,
-        label: $t(option.key),
-      }
-    }),
-  selectedOrder: (state) => ({ $t }) => {
-    return {
-      ...state.order,
-      label: $t(state.order.key),
-    }
-  },
   orderBy(state) {
-    return state.order.value
-  },
-  orderIcon(state) {
-    return state.order.icon
+    return state.order
   },
 }

@@ -30,6 +30,7 @@
       "goal": "Monthly donations needed",
       "name": "Donations info",
       "progress": "Donations collected so far",
+      "showDonationsCheckboxLabel": "Show donations progress bar",
       "successfulUpdate": "Donations info updated successfully!"
     },
     "hashtags": {
@@ -298,8 +299,7 @@
   },
   "donations": {
     "amount-of-total": "{amount} of {total} € collected",
-    "donate-now": "Donate now",
-    "donations-for": "Donations for"
+    "donate-now": "Donate now"
   },
   "editor": {
     "embed": {
@@ -333,9 +333,20 @@
     "all": "All",
     "categories": "Categories of Content",
     "emotions": "Emotions",
-    "filter-by": "Filter by...",
+    "filter-by": "Filter by ...",
     "following": "Users I follow",
-    "languages": "Languages"
+    "languages": "Languages",
+    "order": {
+      "newest": {
+        "hint": "Sort posts by the newest first",
+        "label": "Newest first"
+      },
+      "oldest": {
+        "hint": "Sort posts by the oldest first",
+        "label": "Oldest first"
+      }
+    },
+    "order-by": "Order by ..."
   },
   "followButton": {
     "follow": "Follow",
@@ -778,18 +789,6 @@
     "termsAndConditions": "Terms and conditions",
     "thanks": "Thanks!",
     "tribunal": "Registry court"
-  },
-  "store": {
-    "posts": {
-      "orderBy": {
-        "newest": {
-          "label": "Newest"
-        },
-        "oldest": {
-          "label": "Oldest"
-        }
-      }
-    }
   },
   "termsAndConditions": {
     "newTermsAndConditions": "New Terms and Conditions",

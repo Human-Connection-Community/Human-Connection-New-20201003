@@ -23,7 +23,7 @@
 
 <script>
 import HcEditor from '~/components/Editor/Editor'
-import { COMMENT_MIN_LENGTH } from '../../constants/comment'
+import { COMMENT_MIN_LENGTH } from '~/constants/comment'
 import { minimisedUserQuery } from '~/graphql/User'
 import CommentMutations from '~/graphql/CommentMutations'
 

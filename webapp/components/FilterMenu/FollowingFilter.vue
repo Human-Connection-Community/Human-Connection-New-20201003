@@ -18,6 +18,7 @@ import FilterMenuSection from '~/components/FilterMenu/FilterMenuSection'
 import LabeledButton from '~/components/_new/generic/LabeledButton/LabeledButton'
 
 export default {
+  name: 'FollowingFilter',
   components: {
     FilterMenuSection,
     LabeledButton,

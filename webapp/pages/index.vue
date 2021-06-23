@@ -4,22 +4,12 @@
       <ds-grid-item v-if="hashtag" :row-span="2" column-span="fullWidth">
         <hashtags-filter :hashtag="hashtag" @clearSearch="clearSearch" />
       </ds-grid-item>
-      <ds-grid-item :row-span="2" column-span="fullWidth" class="top-info-bar">
-        <!--<donation-info /> -->
-        <div>
-          <a target="_blank" :href="links.DONATE">
-            <base-button filled>{{ $t('donations.donate-now') }}</base-button>
-          </a>
-        </div>
-        <div class="sorting-dropdown">
-          <ds-select
-            v-model="selected"
-            :options="sortingOptions"
-            size="large"
-            :icon-right="sortingIcon"
-          ></ds-select>
-        </div>
+      <!-- donation info -->
+      <!-- Wolle test appearence or hiding -->
+      <ds-grid-item v-if="showDonations" class="top-info-bar" :row-span="1" column-span="fullWidth">
+        <donation-info :goal="goal" :progress="progress" />
       </ds-grid-item>
+      <!-- newsfeed -->
       <template v-if="hasResults">
         <masonry-grid-item
           v-for="post in posts"
@@ -42,6 +32,7 @@
         </ds-grid-item>
       </template>
     </masonry-grid>
+    <!-- create post -->
     <client-only>
       <nuxt-link :to="{ name: 'post-create' }">
         <base-button
@@ -57,6 +48,7 @@
         />
       </nuxt-link>
     </client-only>
+    <!-- infinite loading -->
     <client-only>
       <infinite-loading v-if="hasMore" @infinite="showMoreContributions" />
     </client-only>
@@ -65,20 +57,20 @@
 
 <script>
 import postListActions from '~/mixins/postListActions'
-// import DonationInfo from '~/components/DonationInfo/DonationInfo.vue'
+import DonationInfo from '~/components/DonationInfo/DonationInfo.vue'
 import HashtagsFilter from '~/components/HashtagsFilter/HashtagsFilter.vue'
 import HcEmpty from '~/components/Empty/Empty'
 import PostTeaser from '~/components/PostTeaser/PostTeaser.vue'
 import MasonryGrid from '~/components/MasonryGrid/MasonryGrid.vue'
 import MasonryGridItem from '~/components/MasonryGrid/MasonryGridItem.vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
+import { DonationsQuery } from '~/graphql/Donations'
 import { filterPosts } from '~/graphql/PostQuery.js'
 import UpdateQuery from '~/components/utils/UpdateQuery'
-import links from '~/constants/links.js'
 
 export default {
   components: {
-    // DonationInfo,
+    DonationInfo,
     HashtagsFilter,
     PostTeaser,
     HcEmpty,
@@ -89,7 +81,9 @@ export default {
   data() {
     const { hashtag = null } = this.$route.query
     return {
-      links,
+      showDonations: true,
+      goal: 15000,
+      progress: 0,
       posts: [],
       hasMore: true,
       // Initialize your apollo data
@@ -101,24 +95,8 @@ export default {
   computed: {
     ...mapGetters({
       postsFilter: 'posts/filter',
-      orderOptions: 'posts/orderOptions',
       orderBy: 'posts/orderBy',
-      selectedOrder: 'posts/selectedOrder',
-      sortingIcon: 'posts/orderIcon',
     }),
-    selected: {
-      get() {
-        return this.selectedOrder(this)
-      },
-      set({ value }) {
-        this.offset = 0
-        this.posts = []
-        this.selectOrder(value)
-      },
-    },
-    sortingOptions() {
-      return this.orderOptions(this)
-    },
     finalFilters() {
       let filter = this.postsFilter
       if (this.hashtag) {
@@ -135,9 +113,6 @@ export default {
   },
   watchQuery: ['hashtag'],
   methods: {
-    ...mapMutations({
-      selectOrder: 'posts/SELECT_ORDER',
-    }),
     clearSearch() {
       this.$router.push({ path: '/' })
       this.hashtag = null
@@ -174,6 +149,18 @@ export default {
     },
   },
   apollo: {
+    Donations: {
+      query() {
+        return DonationsQuery()
+      },
+      update({ Donations }) {
+        if (!Donations) return
+        const { showDonations, goal, progress } = Donations
+        this.showDonations = showDonations
+        this.goal = goal
+        this.progress = progress < goal ? progress : goal
+      },
+    },
     Post: {
       query() {
         return filterPosts(this.$i18n)
@@ -223,23 +210,8 @@ export default {
   box-shadow: $box-shadow-x-large;
 }
 
-.sorting-dropdown {
-  width: 250px;
-  position: relative;
-
-  @media (max-width: 680px) {
-    width: 180px;
-  }
-}
-
 .top-info-bar {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  @media (max-width: 546px) {
-    grid-row-end: span 3 !important;
-    flex-direction: column;
-  }
+  align-items: center;
 }
 </style>

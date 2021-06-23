@@ -291,8 +291,7 @@
   },
   "donations": {
     "amount-of-total": "{amount} dos {total} € foram coletados",
-    "donate-now": "Doe agora",
-    "donations-for": "Doações para"
+    "donate-now": "Doe agora"
   },
   "editor": {
     "embed": {
@@ -315,9 +314,19 @@
     "all": "Todos",
     "categories": "Categorias de Conteúdo",
     "emotions": "Emoções",
-    "filter-by": "Filtrar por...",
+    "filter-by": "Filtrar por ...",
     "following": "Usuários que eu sigo",
-    "languages": "Idiomas"
+    "languages": "Idiomas",
+    "order": {
+      "newest": {
+        "hint": null,
+        "label": "Mais recentes"
+      },
+      "oldest": {
+        "hint": null,
+        "label": "Mais antigos"
+      }
+    }
   },
   "followButton": {
     "follow": "Seguir",
@@ -654,18 +663,6 @@
     "termsAndConditions": "Termos e Condições",
     "thanks": "Obrigado(a)!",
     "tribunal": "tribunal de registo"
-  },
-  "store": {
-    "posts": {
-      "orderBy": {
-        "newest": {
-          "label": "Mais recentes"
-        },
-        "oldest": {
-          "label": "Mais antigos"
-        }
-      }
-    }
   },
   "termsAndConditions": {
     "newTermsAndConditions": "Novos Termos e Condições",

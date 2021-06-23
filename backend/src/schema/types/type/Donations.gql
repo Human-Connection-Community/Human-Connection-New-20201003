@@ -1,15 +1,16 @@
 type Donations {
   id: ID!
+  createdAt: String!
+  updatedAt: String!
+  showDonations: Boolean!
   goal: Int!
   progress: Int!
-  createdAt: String
-  updatedAt: String
 }
 
 type Query {
-  Donations: [Donations]
+  Donations: Donations
 }
 
 type Mutation {
-  UpdateDonations(goal: Int, progress: Int): Donations
+  UpdateDonations(showDonations: Boolean, goal: Int, progress: Int): Donations
 }

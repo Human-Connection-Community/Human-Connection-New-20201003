@@ -253,8 +253,7 @@
   },
   "donations": {
     "amount-of-total": "{amount} of {total} € collezionato",
-    "donate-now": "Dona ora",
-    "donations-for": "Donazioni per"
+    "donate-now": "Dona ora"
   },
   "editor": {
     "embed": {
@@ -279,7 +278,17 @@
     "emotions": null,
     "filter-by": null,
     "following": null,
-    "languages": null
+    "languages": null,
+    "order": {
+      "newest": {
+        "hint": null,
+        "label": null
+      },
+      "oldest": {
+        "hint": null,
+        "label": null
+      }
+    }
   },
   "followButton": {
     "follow": null,
@@ -619,18 +628,6 @@
     "termsAndConditions": null,
     "thanks": null,
     "tribunal": "registro tribunale"
-  },
-  "store": {
-    "posts": {
-      "orderBy": {
-        "newest": {
-          "label": null
-        },
-        "oldest": {
-          "label": null
-        }
-      }
-    }
   },
   "termsAndConditions": {
     "newTermsAndConditions": "Nuovi Termini e Condizioni",

@@ -19,27 +19,11 @@ describe('PostIndex', () => {
 
   beforeEach(() => {
     mutations = {
-      'posts/SELECT_ORDER': jest.fn(),
+      'posts/TOGGLE_ORDER': jest.fn(),
     }
     store = new Vuex.Store({
       getters: {
         'posts/filter': () => ({}),
-        'posts/orderOptions': () => () => [
-          {
-            key: 'store.posts.orderBy.oldest.label',
-            label: 'store.posts.orderBy.oldest.label',
-            icon: 'sort-amount-asc',
-            value: 'createdAt_asc',
-          },
-          {
-            key: 'store.posts.orderBy.newest.label',
-            label: 'store.posts.orderBy.newest.label',
-            icon: 'sort-amount-desc',
-            value: 'createdAt_desc',
-          },
-        ],
-        'posts/selectedOrder': () => () => 'createdAt_desc',
-        'posts/orderIcon': () => 'sort-amount-desc',
         'posts/orderBy': () => 'createdAt_desc',
         'auth/user': () => {
           return { id: 'u23' }
@@ -109,19 +93,31 @@ describe('PostIndex', () => {
       wrapper.find(HashtagsFilter).vm.$emit('clearSearch')
       expect(wrapper.vm.hashtag).toBeNull()
     })
+  })
 
-    describe('mount', () => {
-      beforeEach(() => {
-        wrapper = mount(PostIndex, {
-          store,
-          mocks,
-          localVue,
-        })
+  describe('mount', () => {
+    Wrapper = () => {
+      return mount(PostIndex, {
+        store,
+        mocks,
+        localVue,
+      })
+    }
+
+    beforeEach(() => {
+      wrapper = Wrapper()
+    })
+
+    describe('donation-info', () => {
+      it('shows donation-info on default', () => {
+        wrapper = Wrapper()
+        expect(wrapper.find('.top-info-bar').exists()).toBe(true)
       })
 
-      it('calls store when using order by menu', () => {
-        wrapper.findAll('li').at(0).trigger('click')
-        expect(mutations['posts/SELECT_ORDER']).toHaveBeenCalledWith({}, 'createdAt_asc')
+      it('hides donation-info if not "showDonations"', async () => {
+        wrapper = Wrapper()
+        await wrapper.setData({ showDonations: false })
+        expect(wrapper.find('.top-info-bar').exists()).toBe(false)
       })
     })
   })

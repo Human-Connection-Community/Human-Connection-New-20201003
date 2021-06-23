@@ -1,9 +1,15 @@
 <template>
-  <div class="progress-bar">
-    <div class="progress-bar__goal"></div>
-    <div class="progress-bar__progress" :style="progressBarWidth"></div>
-    <h4 v-if="title" class="progress-bar__title">{{ title }}</h4>
-    <span v-if="label" class="progress-bar__label">{{ label }}</span>
+  <div class="progress-bar-component">
+    <div class="progress-bar">
+      <div class="progress-bar__goal"></div>
+      <div class="progress-bar__progress" :style="progressBarWidth"></div>
+      <div class="progress-bar__border" style="width: 100%">
+        <span v-if="label" class="progress-bar__label">{{ label }}</span>
+      </div>
+    </div>
+    <div class="progress-bar-button">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -14,14 +20,11 @@ export default {
       type: Number,
       required: true,
     },
-    label: {
-      type: String,
-    },
     progress: {
       type: Number,
       required: true,
     },
-    title: {
+    label: {
       type: String,
     },
   },
@@ -34,64 +37,69 @@ export default {
 </script>
 
 <style lang="scss">
+.progress-bar-component {
+  height: 100%;
+  position: relative;
+  flex: 1;
+  display: flex;
+  top: $space-xx-small;
+}
+
 .progress-bar {
   position: relative;
   height: 100%;
-  width: 240px;
+  flex: 1;
   margin-right: $space-x-small;
-
-  @media (max-width: 680px) {
-    width: 180px;
-  }
-
-  @media (max-width: 546px) {
-    flex-basis: 50%;
-    flex-grow: 1;
-  }
-}
-
-.progress-bar__title {
-  position: absolute;
-  top: -2px;
-  left: $space-xx-small;
-  margin: 0;
-
-  @media (max-width: 546px) {
-    top: $space-xx-small;
-  }
-
-  @media (max-width: 350px) {
-    font-size: $font-size-small;
-  }
 }
 
 .progress-bar__goal {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 37.5px; // styleguide-button-size
-  width: 100%;
-  background-color: $color-neutral-100;
+  position: relative;
+  height: 26px; // styleguide-button-size
+  border: 1px solid $color-primary;
+  background: repeating-linear-gradient(120deg, $color-neutral-80, $color-neutral-70);
   border-radius: $border-radius-base;
 }
 
 .progress-bar__progress {
   position: absolute;
-  bottom: 1px;
-  left: 0;
-  height: 35.5px; // styleguide-button-size - 2px border
+  top: 0px;
+  left: 0px;
+  height: 26px; // styleguide-button-size
   max-width: 100%;
-  background-color: $color-yellow;
+  background: repeating-linear-gradient(
+    120deg,
+    $color-primary 0px,
+    $color-primary 30px,
+    $color-primary-light 50px,
+    $color-primary-light 75px,
+    $color-primary 95px
+  );
+  border-radius: $border-radius-base;
+}
+
+.progress-bar__border {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 26px; // styleguide-button-size
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: $border-radius-base;
 }
 
 .progress-bar__label {
-  position: absolute;
-  top: 50%;
-  left: $space-xx-small;
+  position: relative;
+  float: right;
 
   @media (max-width: 350px) {
     font-size: $font-size-small;
   }
+}
+
+.progress-bar-button {
+  position: relative;
+  float: right;
 }
 </style>

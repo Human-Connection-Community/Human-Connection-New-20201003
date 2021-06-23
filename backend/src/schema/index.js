@@ -20,7 +20,6 @@ export default makeAugmentedSchema({
         'FILED',
         'REVIEWED',
         'Report',
-        'Donations',
       ],
     },
     mutation: false,

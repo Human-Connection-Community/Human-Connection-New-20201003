@@ -12,6 +12,7 @@ describe('FilterMenu.vue', () => {
 
   const getters = {
     'posts/isActive': () => false,
+    'posts/orderBy': () => 'createdAt_desc',
   }
 
   const stubs = {
