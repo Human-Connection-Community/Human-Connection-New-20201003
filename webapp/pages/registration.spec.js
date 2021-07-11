@@ -72,6 +72,11 @@ describe('Registration', () => {
       })
     }
 
+    it('renders', async () => {
+      wrapper = await Wrapper()
+      expect(wrapper.contains('div')).toBeTruthy()
+    })
+
     describe('no "PUBLIC_REGISTRATION" and no "INVITE_REGISTRATION"', () => {
       beforeEach(() => {
         mocks.$env = {
