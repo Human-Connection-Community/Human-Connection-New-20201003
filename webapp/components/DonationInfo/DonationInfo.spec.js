@@ -25,49 +25,50 @@ describe('DonationInfo.vue', () => {
 
   const Wrapper = () => mount(DonationInfo, { mocks, localVue, propsData })
 
-  it('displays the progress bar', () => {
-    wrapper = Wrapper()
-    expect(wrapper.find('.progress-bar').exists()).toBe(true)
-  })
-
-  it('displays the action button', () => {
-    wrapper = Wrapper()
-    expect(wrapper.find('.base-button').text()).toBe('donations.donate-now')
-  })
-
-  it('includes a link to the ocelot.social donations website', () => {
-    wrapper = Wrapper()
-    expect(wrapper.find('a').attributes('href')).toBe(
-      'https://ocelot-social.herokuapp.com/donations',
-    )
-  })
-
-  describe('mount with data', () => {
-    describe('given german locale', () => {
-      it.skip('creates a label from the given amounts and a translation string', () => {
-        // couldn't find out why it's not working
-        mocks.$i18n.locale = () => 'de'
-        wrapper = Wrapper()
-        expect(mocks.$t).toBeCalledWith(
-          'donations.amount-of-total',
-          expect.objectContaining({
-            amount: '10.000',
-            total: '50.000',
-          }),
-        )
-      })
+  describe('mount', () => {
+    beforeEach(() => {
+      wrapper = Wrapper()
     })
 
-    describe('given english locale', () => {
-      it('creates a label from the given amounts and a translation string', () => {
-        wrapper = Wrapper()
-        expect(mocks.$t).toBeCalledWith(
-          'donations.amount-of-total',
-          expect.objectContaining({
-            amount: '10,000',
-            total: '50,000',
-          }),
-        )
+    it('displays the progress bar', () => {
+      expect(wrapper.find('.progress-bar').exists()).toBe(true)
+    })
+
+    it('displays the action button', () => {
+      expect(wrapper.find('.base-button').text()).toBe('donations.donate-now')
+    })
+
+    it('includes a link to the ocelot.social donations website', () => {
+      expect(wrapper.find('a').attributes('href')).toBe(
+        'https://ocelot-social.herokuapp.com/donations',
+      )
+    })
+
+    describe('mount with data', () => {
+      describe('given german locale', () => {
+        beforeEach(() => {
+          mocks.$i18n.locale = () => 'de'
+        })
+
+        // it looks to me that toLocaleString for some reason is not working as expected
+        it.skip('creates a label from the given amounts and a translation string', () => {
+          expect(mocks.$t).nthCalledWith(1, 'donations.amount-of-total', {
+            amount: '10.000',
+            total: '50.000',
+          })
+        })
+      })
+
+      describe('given english locale', () => {
+        it('creates a label from the given amounts and a translation string', () => {
+          expect(mocks.$t).toBeCalledWith(
+            'donations.amount-of-total',
+            expect.objectContaining({
+              amount: '10,000',
+              total: '50,000',
+            }),
+          )
+        })
       })
     })
   })

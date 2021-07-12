@@ -28,6 +28,7 @@ export default {
   },
   computed: {
     label() {
+      // console.log(typeof this.progress, this.$i18n.locale(), this.progress.toLocaleString('de-DE'))
       return this.$t('donations.amount-of-total', {
         amount: this.progress.toLocaleString(this.$i18n.locale()),
         total: this.goal.toLocaleString(this.$i18n.locale()),
