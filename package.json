@@ -27,7 +27,7 @@
     "@babel/register": "^7.12.10",
     "auto-changelog": "^2.2.1",
     "bcryptjs": "^2.4.3",
-    "codecov": "^3.7.1",
+    "codecov": "^3.8.2",
     "cross-env": "^7.0.2",
     "cucumber": "^6.0.5",
     "cypress": "^7.0.1",
