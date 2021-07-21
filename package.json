@@ -22,7 +22,7 @@
     "release": "yarn version --no-git-tag-version --no-commit-hooks --no-commit && auto-changelog --latest-version $(node -p -e \"require('./package.json').version\") && cd backend && yarn version --no-git-tag-version --no-commit-hooks --no-commit --new-version $(node -p -e \"require('./../package.json').version\") && cd ../webapp && yarn version --no-git-tag-version --no-commit-hooks --no-commit --new-version $(node -p -e \"require('./../package.json').version\")"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.12.7",
     "@babel/register": "^7.12.10",
     "auto-changelog": "^2.2.1",
