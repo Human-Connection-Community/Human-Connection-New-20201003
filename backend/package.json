@@ -84,7 +84,7 @@
     "merge-graphql-schemas": "^1.7.8",
     "metascraper": "^5.11.8",
     "metascraper-audio": "^5.14.26",
-    "metascraper-author": "^5.14.22",
+    "metascraper-author": "^5.22.7",
     "metascraper-clearbit-logo": "^5.3.0",
     "metascraper-date": "^5.11.8",
     "metascraper-description": "^5.11.6",
