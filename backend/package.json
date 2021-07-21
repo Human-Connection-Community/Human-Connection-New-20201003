@@ -48,7 +48,7 @@
     "@hapi/joi": "^17.1.1",
     "@sentry/node": "^5.15.4",
     "apollo-cache-inmemory": "~1.6.5",
-    "apollo-client": "~2.6.8",
+    "apollo-client": "~2.6.10",
     "apollo-link-context": "~1.0.20",
     "apollo-link-http": "~1.5.17",
     "apollo-server": "~2.14.2",
