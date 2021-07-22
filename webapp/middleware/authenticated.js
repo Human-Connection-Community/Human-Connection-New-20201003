@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty'
+import links from '~/constants/links.js'
 
 export default async ({ store, env, route, redirect }) => {
   const publicPages = env.publicPages
@@ -22,5 +23,5 @@ export default async ({ store, env, route, redirect }) => {
     params.path = route.path
   }
 
-  return redirect('/registration', params)
+  return redirect(links.LANDING_PAGE, params)
 }

@@ -47,12 +47,8 @@ describe('PageFooter.vue', () => {
         wrapper = Wrapper()
       })
 
-      it('renders ORGANIZATION', () => {
-        expect(wrapper.find('a[data-test="organization-link"]').exists()).toBe(true)
-      })
-
       it('renders version', () => {
-        expect(wrapper.find('a[data-test="version-link"]').exists()).toBe(true)
+        expect(wrapper.find('a[data-test="version-link"]').exists()).toBeTruthy()
       })
     })
 
@@ -60,6 +56,7 @@ describe('PageFooter.vue', () => {
       beforeEach(async () => {
         const links = {
           ...linksDefault,
+          ORGANIZATION: null,
           IMPRINT: null,
           TERMS_AND_CONDITIONS: null,
           CODE_OF_CONDUCT: null,
@@ -71,24 +68,28 @@ describe('PageFooter.vue', () => {
         await wrapper.vm.$nextTick()
       })
 
+      it('renders ORGANIZATION as nuxt-link', () => {
+        expect(wrapper.find('span[data-test="organization-nuxt-link"]').exists()).toBeTruthy()
+      })
+
       it('renders IMPRINT as nuxt-link', () => {
-        expect(wrapper.find('span[data-test="imprint-nuxt-link"]').exists()).toBe(true)
+        expect(wrapper.find('span[data-test="imprint-nuxt-link"]').exists()).toBeTruthy()
       })
 
       it('renders TERMS_AND_CONDITIONS as nuxt-link', () => {
-        expect(wrapper.find('span[data-test="terms-nuxt-link"]').exists()).toBe(true)
+        expect(wrapper.find('span[data-test="terms-nuxt-link"]').exists()).toBeTruthy()
       })
 
       it('renders CODE_OF_CONDUCT as nuxt-link', () => {
-        expect(wrapper.find('span[data-test="code-nuxt-link"]').exists()).toBe(true)
+        expect(wrapper.find('span[data-test="code-nuxt-link"]').exists()).toBeTruthy()
       })
 
       it('renders DATA_PRIVACY as nuxt-link', () => {
-        expect(wrapper.find('span[data-test="data-nuxt-link"]').exists()).toBe(true)
+        expect(wrapper.find('span[data-test="data-nuxt-link"]').exists()).toBeTruthy()
       })
 
       it('renders FAQ as nuxt-link', () => {
-        expect(wrapper.find('span[data-test="faq-nuxt-link"]').exists()).toBe(true)
+        expect(wrapper.find('span[data-test="faq-nuxt-link"]').exists()).toBeTruthy()
       })
     })
 
@@ -96,6 +97,7 @@ describe('PageFooter.vue', () => {
       beforeEach(async () => {
         const links = {
           ...linksDefault,
+          ORGANIZATION: 'https://ocelot.social',
           IMPRINT: 'https://ocelot.social/IMPRINT',
           TERMS_AND_CONDITIONS: 'https://ocelot.social/TERMS_AND_CONDITIONS',
           CODE_OF_CONDUCT: 'https://ocelot.social/CODE_OF_CONDUCT',
@@ -107,26 +109,32 @@ describe('PageFooter.vue', () => {
         await wrapper.vm.$nextTick()
       })
 
+      it('renders ORGANIZATION as "a" tag link', () => {
+        expect(wrapper.find(`a[href="https://ocelot.social"]`).exists()).toBeTruthy()
+      })
+
       it('renders IMPRINT as "a" tag link', () => {
-        expect(wrapper.find(`a[href="https://ocelot.social/IMPRINT"]`).exists()).toBe(true)
+        expect(wrapper.find(`a[href="https://ocelot.social/IMPRINT"]`).exists()).toBeTruthy()
       })
 
       it('renders TERMS_AND_CONDITIONS as "a" tag link', () => {
-        expect(wrapper.find(`a[href="https://ocelot.social/TERMS_AND_CONDITIONS"]`).exists()).toBe(
-          true,
-        )
+        expect(
+          wrapper.find(`a[href="https://ocelot.social/TERMS_AND_CONDITIONS"]`).exists(),
+        ).toBeTruthy()
       })
 
       it('renders CODE_OF_CONDUCT as "a" tag link', () => {
-        expect(wrapper.find(`a[href="https://ocelot.social/CODE_OF_CONDUCT"]`).exists()).toBe(true)
+        expect(
+          wrapper.find(`a[href="https://ocelot.social/CODE_OF_CONDUCT"]`).exists(),
+        ).toBeTruthy()
       })
 
       it('renders DATA_PRIVACY as "a" tag link', () => {
-        expect(wrapper.find(`a[href="https://ocelot.social/DATA_PRIVACY"]`).exists()).toBe(true)
+        expect(wrapper.find(`a[href="https://ocelot.social/DATA_PRIVACY"]`).exists()).toBeTruthy()
       })
 
       it('renders FAQ as "a" tag link', () => {
-        expect(wrapper.find(`a[href="https://ocelot.social/FAQ"]`).exists()).toBe(true)
+        expect(wrapper.find(`a[href="https://ocelot.social/FAQ"]`).exists()).toBeTruthy()
       })
     })
   })
