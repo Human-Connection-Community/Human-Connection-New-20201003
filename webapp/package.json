@@ -93,7 +93,7 @@
     "tiptap-extensions": "~1.28.8",
     "trunc-html": "^1.1.2",
     "v-tooltip": "~2.0.3",
-    "validator": "^13.0.0",
+    "validator": "^13.6.0",
     "vue-count-to": "~1.0.13",
     "vue-infinite-loading": "^2.4.5",
     "vue-izitoast": "^1.2.1",
