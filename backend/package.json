@@ -117,7 +117,7 @@
     "uuid": "~8.3.2",
     "validator": "^13.0.0",
     "wait-on": "~4.0.1",
-    "xregexp": "^4.3.0"
+    "xregexp": "^5.0.2"
   },
   "devDependencies": {
     "apollo-server-testing": "~2.11.0",
