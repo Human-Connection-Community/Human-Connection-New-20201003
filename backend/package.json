@@ -97,7 +97,7 @@
     "metascraper-title": "^5.11.8",
     "metascraper-url": "^5.14.26",
     "metascraper-video": "^5.11.8",
-    "metascraper-youtube": "^5.11.8",
+    "metascraper-youtube": "^5.22.11",
     "migrate": "^1.7.0",
     "mime-types": "^2.1.26",
     "minimatch": "^3.0.4",
