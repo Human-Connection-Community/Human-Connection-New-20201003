@@ -31,7 +31,7 @@
     "cross-env": "^7.0.3",
     "cucumber": "^6.0.5",
     "cypress": "^7.0.1",
-    "cypress-cucumber-preprocessor": "^2.2.1",
+    "cypress-cucumber-preprocessor": "^4.1.4",
     "cypress-file-upload": "^3.5.3",
     "date-fns": "^2.22.1",
     "dotenv": "^8.2.0",
